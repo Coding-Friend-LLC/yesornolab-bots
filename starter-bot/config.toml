@@ -1,0 +1,54 @@
+# ============================================================
+#  CONTROL ROOM
+#  Every setting the bot uses lives in this one file.
+#  Change a number, save, run the bot again. You never need to
+#  open bot.py.
+#
+#  This is teaching code. It does not place real orders.
+#  Nothing here is financial advice. See README and LICENSE.
+# ============================================================
+
+[market]
+pair = "XBTUSD"        # Kraken's name for bitcoin priced in US dollars
+candle_minutes = 60    # size of each price bar: 1, 5, 15, 30, 60, 240 or 1440
+
+[account]
+starting_cash = 1000.0   # pretend dollars
+fee_percent = 0.40       # what the exchange keeps on each buy and each sell. Do not set this to 0.
+trade_percent = 100      # how much of your cash to use on each buy (1 to 100)
+
+[mode]
+# "backtest" = replay recent history right now and print a report
+# "paper"    = watch the live price and pretend to trade, forever (Ctrl+C to stop)
+run = "backtest"
+
+[strategy]
+# Pick ONE: "momentum", "ma_cross", "rsi_dip", "breakout"
+use = "momentum"
+
+[strategy.momentum]
+# Buy when price has risen at least this much over the lookback. Sell when it has fallen this much.
+lookback_bars = 24
+buy_when_up_percent = 3.0
+sell_when_down_percent = 2.0
+
+[strategy.ma_cross]
+# Buy when the fast average crosses above the slow one. Sell when it crosses back below.
+fast_bars = 12
+slow_bars = 48
+
+[strategy.rsi_dip]
+# RSI runs from 0 to 100. Low = sold hard lately. Buy the dip, sell the recovery.
+rsi_bars = 14
+buy_below = 30
+sell_above = 55
+
+[strategy.breakout]
+# Buy when price closes above the highest high of the last N bars. Sell below the lowest low of the last M.
+high_bars = 48
+exit_low_bars = 24
+
+[safety]
+stop_loss_percent = 5.0      # sell if the position is down this much. 0 = off
+take_profit_percent = 0.0    # sell if the position is up this much. 0 = off
+max_trades_per_day = 4       # a runaway bot is the classic beginner disaster
